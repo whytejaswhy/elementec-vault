@@ -2,6 +2,10 @@
 
 A lightweight product and prompt library for **vault.elementec.co**, hosted on GitHub Pages.
 
+## UI direction
+
+Keep products and prompts in two columns on phones, including narrow 320px screens. The Vault follows the [Elementec Journal](https://elementec.co/) theme: DM Sans, a `#f4f4f4` canvas, `#202020` borders, `#100fdc` blue accents, square panels, and a blue underline on the active tab. Cards expand to three columns on wider desktop screens. Keep prompt reading and copy actions in the full-width dialog.
+
 ## Add products and prompts
 
 1. Open `https://vault.elementec.co/edit.html`.
