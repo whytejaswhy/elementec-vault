@@ -15,6 +15,10 @@ function chooseType(next, update = true) {
   $('results').setAttribute('aria-labelledby', `${type === 'product' ? 'products' : 'prompts'}-tab`);
   const categories = [...new Set(entries.filter(item => item.type === type && (!activeCollection || item.collectionId === activeCollection)).map(item => item.category))].sort();
   $('category').replaceChildren(new Option('All categories', ''), ...categories.map(c => new Option(c, c)));
+  const availableCollections = collections.filter(c => entries.some(item => item.type === type && item.collectionId === c.id));
+  $('collection-filter').replaceChildren(new Option('All collections', ''), ...availableCollections.map(c => new Option(c.title, c.id)));
+  $('collection-filter').value = activeCollection;
+  $('collection-filter-label').hidden = !availableCollections.length;
   if (update) updateAddress();
   if (loaded) render();
 }
@@ -23,8 +27,11 @@ function render() {
   const list = searchEntries(scoped, type, $('search').value, $('category').value, collections);
   $('results-count').textContent = `${list.length} ${type === 'product' ? (list.length === 1 ? 'product' : 'products') : (list.length === 1 ? 'prompt' : 'prompts')}`;
   if (!list.length) { const hasItems = entries.some(item => item.type === type); state(hasItems ? 'Nothing matches yet.' : `${type === 'product' ? 'Product links' : 'Prompts'} are coming soon.`, hasItems ? 'Try another search or choose All categories.' : 'Check back here for the next additions to the Vault.'); return; }
+  if (!activeCollection) {
+    const grid = el('div', 'grid'); grid.append(...list.map(cardFor)); $('results').replaceChildren(grid); return;
+  }
   const sections = [];
-  for (const collection of collections) {
+  for (const collection of collections.filter(c => c.id === activeCollection)) {
     const members = list.filter(item => item.collectionId === collection.id);
     if (!members.length) continue;
     const section = el('section', 'collection');
@@ -42,12 +49,6 @@ function render() {
     }
     heading.append(links); section.append(heading);
     const grid = el('div', 'grid'); grid.append(...members.map(cardFor)); section.append(grid); sections.push(section);
-  }
-  const ungrouped = list.filter(item => !item.collectionId);
-  if (ungrouped.length) {
-    const section = el('section', 'collection');
-    if (sections.length) { const heading = el('div', 'collection-heading'); heading.append(el('h2', 'other-heading', 'More in the Vault')); section.append(heading); }
-    const grid = el('div', 'grid'); grid.append(...ungrouped.map(cardFor)); section.append(grid); sections.push(section);
   }
   $('results').replaceChildren(...sections);
 }
@@ -77,6 +78,7 @@ for (const tab of tabs) {
   tab.addEventListener('keydown', event => { if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs[1] : tabs.find(t => t !== tab); chooseType(next.dataset.type); next.focus(); });
 }
 $('search').addEventListener('input', render); $('category').addEventListener('change', render);
+$('collection-filter').addEventListener('change', () => { activeCollection = $('collection-filter').value; chooseType(type); });
 $('close-dialog').addEventListener('click', () => dialog.close()); dialog.addEventListener('close', () => updateAddress());
 $('copy-prompt').addEventListener('click', () => activePrompt && copy(activePrompt.prompt, 'Prompt copied.'));
 $('copy-link').addEventListener('click', () => activePrompt && copy(location.href, 'Link copied.', true));

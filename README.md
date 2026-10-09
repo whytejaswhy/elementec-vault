@@ -60,3 +60,5 @@ Serve `site` with any static HTTP server. For a populated preview, copy `site` t
 The first public visit shows a dismissible bookmark or install reminder, remembered in browser storage. It does not appear in an installed standalone app or in sample previews. The footer’s **Save the Vault** button reopens the instructions. Browsers that provide `beforeinstallprompt` get a native install action; iPhone/iPad and unsupported or in-app browsers get device-specific instructions. Websites cannot create bookmarks automatically. With browser storage blocked, the reminder may reappear on a later load.
 
 `manifest.webmanifest` and branded app icons support standalone installation over HTTPS. Installation depends on the browser and its eligibility checks; adding a Home Screen shortcut is also an option. The app fetches current content online and makes no offline-access promise.
+
+The default Vault shows every matching entry in one grid, with equal prominence. Named reel collections are available through the Collection filter and stable shared links; selecting one displays its title and count inside that collection’s island.
