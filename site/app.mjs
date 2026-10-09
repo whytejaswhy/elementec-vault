@@ -20,7 +20,6 @@ function render() {
   const scoped = activeCollection ? entries.filter(item => item.collectionId === activeCollection) : entries;
   const list = searchEntries(scoped, type, $('search').value, $('category').value, collections);
   $('results-count').textContent = `${list.length} ${type === 'product' ? (list.length === 1 ? 'product' : 'products') : (list.length === 1 ? 'prompt' : 'prompts')}`;
-  $('affiliate-note').hidden = !list.some(item => item.type === 'product' && item.affiliate);
   if (!list.length) { const hasItems = entries.some(item => item.type === type); state(hasItems ? 'Nothing matches yet.' : `${type === 'product' ? 'Product links' : 'Prompts'} are coming soon.`, hasItems ? 'Try another search or choose All categories.' : 'Check back here for the next additions to the Vault.'); return; }
   const sections = [];
   for (const collection of collections) {
@@ -28,15 +27,14 @@ function render() {
     if (!members.length) continue;
     const section = el('section', 'collection');
     const heading = el('div', 'collection-heading');
-    const copy = el('div');
-    copy.append(el('p', 'eyebrow', `COLLECTION · ${members.length} ${type === 'product' ? (members.length === 1 ? 'PRODUCT' : 'PRODUCTS') : (members.length === 1 ? 'PROMPT' : 'PROMPTS')}`));
+    const copy = el('div', 'collection-summary');
     const title = el('h2', '', collection.title); title.id = `collection-${collection.id}`;
-    section.setAttribute('aria-labelledby', title.id); copy.append(title); heading.append(copy);
+    section.setAttribute('aria-labelledby', title.id); copy.append(title, el('span', 'collection-count', `${members.length} ${type === 'product' ? (members.length === 1 ? 'product' : 'products') : (members.length === 1 ? 'prompt' : 'prompts')}`)); heading.append(copy);
     const links = el('div', 'collection-links');
-    const link = el('a', '', activeCollection ? (type === 'product' ? 'All products' : 'All prompts') : 'Open collection');
+    const link = el('a', '', activeCollection ? (type === 'product' ? 'All products' : 'All prompts') : 'View all ↗');
     const url = new URL(location.href); url.searchParams.set('type', type === 'prompt' ? 'prompts' : 'products'); url.hash = '';
     if (activeCollection) url.searchParams.delete('reel'); else url.searchParams.set('reel', collection.id);
-    link.href = url.href; links.append(link);
+    link.href = url.href; if (!activeCollection) link.setAttribute('aria-label', `Open collection: ${collection.title}`); links.append(link);
     if (collection.url && safeUrl(collection.url)) {
       const watch = el('a', '', 'Watch reel ↗'); watch.href = safeUrl(collection.url); watch.target = '_blank'; watch.rel = 'noopener noreferrer'; links.append(watch);
     }
@@ -46,7 +44,7 @@ function render() {
   const ungrouped = list.filter(item => !item.collectionId);
   if (ungrouped.length) {
     const section = el('section', 'collection');
-    if (sections.length) section.append(el('h2', 'other-heading', 'More in the Vault'));
+    if (sections.length) { const heading = el('div', 'collection-heading'); heading.append(el('h2', 'other-heading', 'More in the Vault')); section.append(heading); }
     const grid = el('div', 'grid'); grid.append(...ungrouped.map(cardFor)); section.append(grid); sections.push(section);
   }
   $('results').replaceChildren(...sections);
@@ -55,12 +53,10 @@ function cardFor(item) {
     const card = el('article', 'card'); card.id = item.id;
     if (item.image && safeUrl(item.image)) { const image = el('img', 'card-image'); image.src = safeUrl(item.image); image.alt = item.title; image.loading = 'lazy'; image.addEventListener('error', () => image.remove(), { once: true }); card.append(image); }
     const meta = el('div', 'card-meta'); meta.append(el('span', 'category', item.category));
-    if (item.affiliate) meta.append(el('span', 'affiliate-label', 'Affiliate'));
     card.append(meta, el('h2', '', item.title));
     const bottom = el('div', 'card-bottom');
-    if (item.type === 'product') { const link = el('a', 'card-action', item.retailer ? `View on ${item.retailer}` : 'View product'); link.href = safeUrl(item.url); link.target = '_blank'; link.rel = item.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'; link.setAttribute('aria-label', `${link.textContent}: ${item.title}`); bottom.append(link); }
+    if (item.type === 'product') { const link = el('a', 'card-action', 'Open'); link.href = safeUrl(item.url); link.target = '_blank'; link.rel = item.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'; link.setAttribute('aria-label', `${link.textContent}: ${item.title}`); bottom.append(link); }
     else { const button = el('button', 'card-action', 'Open prompt'); button.type = 'button'; button.setAttribute('aria-label', `Open prompt: ${item.title}`); button.addEventListener('click', () => openPrompt(item)); bottom.append(button); }
-    if (item.updated) { const date = el('time', 'card-date', new Date(`${item.updated}T00:00:00`).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })); date.dateTime = item.updated; bottom.append(date); }
     card.append(bottom); return card;
 }
 

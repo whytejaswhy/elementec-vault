@@ -20,7 +20,7 @@ The editor runs in your browser. It cannot write to GitHub or publish changes by
 
 Collection titles are chosen by Tejas or an assigned team member to describe the reel. In the editor, choose an existing **Collection**, or **Create a new collection…** and enter its exact **Collection title**. Assign related entries to that collection. Editing an existing collection title renames the heading for all its members while keeping the shared URL stable. Two separate reels can have separate collections even if their titles match. Product categories, such as Phones, remain separate from collection titles. **Open collection** gives you a shareable page containing only that group; an optional **Reel link** adds **Watch reel** for the group. Reel links and groups survive editor imports, edits and downloads.
 
-New entries are placed first. Editing an entry preserves its stable ID, so prompt links keep working after name changes. Entries may be hidden from the public page, removed, or given an affiliate label. Prompts have **Copy prompt** and **Copy link** actions. Search covers names, descriptions, categories, and full prompt text.
+New entries are placed first. Editing an entry preserves its stable ID, so prompt links keep working after name changes. Entries may be hidden from the public page, removed, or marked as affiliate links in the content file. Affiliate metadata is retained for link attribution; cards omit labels, dates, and descriptions. Prompts have **Copy prompt** and **Copy link** actions. Search covers names, descriptions, categories, and full prompt text.
 
 ## Initial publishing setup
 

@@ -8,24 +8,22 @@
   <meta name="theme-color" content="#191a1c" media="(prefers-color-scheme: dark)">
   <title>Elementec Vault</title>
   <link rel="icon" href="brand/header-blue-lime.jpg" type="image/jpeg"><link rel="preload" href="fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=discovery-search-1">
-  <script type="module" src="app.mjs?v=collection-titles-1"></script>
+  <link rel="stylesheet" href="styles.css?v=compact-islands-1">
+  <script type="module" src="app.mjs?v=compact-islands-1"></script>
 </head>
 <body>
   <a class="skip" href="#library">Skip to the Vault</a>
   <header class="masthead"><a class="brand" href="./" aria-label="Elementec Vault home"><span class="brand-mark" aria-hidden="true"></span><span class="brand-text"><strong>elementec vault</strong></span></a><a class="parent-link" href="https://elementec.co/journal">Journal ↗</a></header>
   <main>
-    <div class="context-line"><span>Elementec Vault</span><span>Open access</span></div>
     <p id="preview-note" class="notice" hidden>Preview examples only. These are not Elementec product recommendations.</p>
     <section id="library" aria-label="The Vault">
       <div class="discovery">
-    <section class="intro"><h1>Come back anytime for important stuff</h1><p>Product links and useful prompts, all in one place.</p></section>
+    <section class="intro"><h1>Come back <span class="accent-text">anytime</span> for important stuff</h1><p>Product links and useful prompts, all in one place.</p></section>
       <div class="search-panel"><label class="search"><span class="sr-only">Search the Vault</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Find something in the Vault" autocomplete="off"></label></div>
       <div class="toolbar"><div class="tabs" role="tablist" aria-label="Browse the Vault"><button id="products-tab" type="button" role="tab" aria-selected="true" aria-controls="results" data-type="product">Products <span id="products-count">0</span></button><button id="prompts-tab" type="button" role="tab" aria-selected="false" aria-controls="results" tabindex="-1" data-type="prompt">Prompts <span id="prompts-count">0</span></button></div></div>
       </div>
       <div class="results-heading"><label class="category-label">Category <select id="category"><option value="">All categories</option></select></label><p id="results-count" aria-live="polite"></p></div>
       <div id="results" class="results" role="tabpanel" aria-labelledby="products-tab" aria-busy="true"><p class="state">Opening the Vault…</p></div>
-      <p id="affiliate-note" class="affiliate-note" hidden>Some links are affiliate links. Elementec may earn a commission if you buy through them.</p>
     </section>
   </main>
   <footer><span>ELEMENTEC VAULT</span><span>Keep the useful stuff close.</span></footer>
