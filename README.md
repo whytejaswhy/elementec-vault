@@ -4,7 +4,7 @@ A lightweight product and prompt library for **vault.elementec.co**, hosted on G
 
 ## UI direction
 
-Keep products and prompts in two columns on phones, including narrow 320px screens. The Vault follows the [Elementec Journal](https://elementec.co/) theme: DM Sans, a `#f4f4f4` canvas, `#202020` borders, `#100fdc` blue accents, square panels, and a blue underline on the active tab. Cards expand to three columns on wider desktop screens. Keep prompt reading and copy actions in the full-width dialog.
+Keep products and prompts in two columns on phones, including narrow 320px screens. Follow the current live [Elementec Journal](https://elementec.co/journal), not the retired ChatGPT Site or its local checkout. The theme uses Satoshi, the blue-to-lime brand mark, rounded joined panels, lime action buttons, and system light/dark colours. Light mode uses `#f7f7f5` paper and white surfaces; dark mode uses `#191a1c` paper and `#232427` surfaces. Cards expand to three columns on wider desktop screens. Keep prompt reading and copy actions in the full-width dialog. The current font and brand mark are bundled so the Vault uses the same assets as the Journal. Recheck the live Journal before future theme changes.
 
 ## Add products and prompts
 
