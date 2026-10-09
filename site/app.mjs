@@ -56,10 +56,11 @@ function cardFor(item) {
     const card = el('article', 'card'); card.id = item.id;
     if (item.image && safeUrl(item.image)) { const image = el('img', 'card-image'); image.src = safeUrl(item.image); image.alt = item.title; image.loading = 'lazy'; image.addEventListener('error', () => image.remove(), { once: true }); card.append(image); }
     const meta = el('div', 'card-meta'); meta.append(el('span', 'category', item.category));
-    card.append(meta, el('h2', '', item.title));
-    const bottom = el('div', 'card-bottom');
-    if (item.type === 'product') { const link = el('a', 'card-action', 'Open'); link.href = safeUrl(item.url); link.target = '_blank'; link.rel = item.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'; link.setAttribute('aria-label', `${link.textContent}: ${item.title}`); bottom.append(link); }
-    else { const button = el('button', 'card-action', 'Open prompt'); button.type = 'button'; button.setAttribute('aria-label', `Open prompt: ${item.title}`); button.addEventListener('click', () => openPrompt(item)); bottom.append(button); }
+    card.append(meta);
+    const bottom = el('div', 'card-bottom'); bottom.append(el('h2', '', item.title));
+    const arrow = el('span', '', '↗'); arrow.setAttribute('aria-hidden', 'true');
+    if (item.type === 'product') { const link = el('a', 'card-action'); link.append(arrow); link.href = safeUrl(item.url); link.target = '_blank'; link.rel = item.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'; link.setAttribute('aria-label', `Open: ${item.title}`); bottom.append(link); }
+    else { const button = el('button', 'card-action'); button.append(arrow); button.type = 'button'; button.setAttribute('aria-label', `Open prompt: ${item.title}`); button.addEventListener('click', () => openPrompt(item)); bottom.append(button); }
     card.append(bottom); return card;
 }
 
