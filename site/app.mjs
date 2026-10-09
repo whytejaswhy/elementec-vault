@@ -52,9 +52,9 @@ function cardFor(item) {
     const card = el('article', 'card'); card.id = item.id;
     const collection = collections.find(c => c.id === item.collectionId);
     if (collection) { card.dataset.reelColor = collectionTone(collection); card.dataset.collection = collection.id; card.setAttribute('aria-description', `From ${collection.title}`); }
-    if (item.image && safeUrl(item.image)) { const image = el('img', 'card-image'); image.src = safeUrl(item.image); image.alt = item.title; image.loading = 'lazy'; image.addEventListener('error', () => image.remove(), { once: true }); card.append(image); }
-    const meta = el('div', 'card-meta'); meta.append(el('span', 'category', item.category));
-    card.append(meta);
+    const media = el('div', 'card-media');
+    if (item.image && safeUrl(item.image)) { const image = el('img', 'card-image'); image.src = safeUrl(item.image); image.alt = item.title; image.loading = 'lazy'; media.classList.add('has-image'); image.addEventListener('error', () => { image.remove(); media.classList.remove('has-image'); }, { once: true }); media.append(image); }
+    media.append(el('span', 'category', item.category)); card.append(media);
     const bottom = el('div', 'card-bottom'); bottom.append(el('h2', '', item.title));
     const arrow = el('span', '', '↗'); arrow.setAttribute('aria-hidden', 'true');
     if (item.type === 'product') { const link = el('a', 'card-action'); link.append(arrow); link.href = safeUrl(item.url); link.target = '_blank'; link.rel = item.affiliate ? 'noopener noreferrer sponsored' : 'noopener noreferrer'; link.setAttribute('aria-label', `Open: ${item.title}`); bottom.append(link); }
