@@ -1,4 +1,4 @@
-import { validateContent } from './lib.mjs?v=d710948';
+import { validateContent, updateCollection } from './lib.mjs?v=collection-titles-1';
 const $ = id => document.getElementById(id);
 let data = { entries: [], collections: [] }, currentId = null, dirty = false, formDirty = false, ready = false;
 const status = text => { $('editor-status').textContent = text; };
@@ -11,7 +11,9 @@ function refreshList() {
   });
   if (!nodes.length) { const empty = document.createElement('p'); empty.className = 'empty'; empty.textContent = 'Your Vault is ready for its first entry.'; nodes.push(empty); }
   $('entries-list').replaceChildren(...nodes);
-  $('reel-titles').replaceChildren(...data.collections.map(c => new Option(c.title, c.title)));
+  const selectedCollection = $('entry-collection').value;
+  $('entry-collection').replaceChildren(new Option('No collection', ''), ...data.collections.map(c => new Option(c.title, c.id)), new Option('Create a new collection…', '__new__'));
+  $('entry-collection').value = selectedCollection;
   $('categories').replaceChildren(...[...new Set(data.entries.map(e => e.category))].sort().map(c => new Option(c, c)));
 }
 function showType() { const isProduct = $('entry-type').value === 'product'; $('product-fields').hidden = !isProduct; $('prompt-fields').hidden = isProduct; $('entry-url').required = isProduct; $('entry-prompt').required = !isProduct; for (const input of $('product-fields').querySelectorAll('input')) input.disabled = !isProduct; $('entry-prompt').disabled = isProduct; }
@@ -19,17 +21,23 @@ function fill(item = null) {
   currentId = item?.id || null; $('entry-form').reset();
   $('entry-type').value = item?.type || 'product';
   for (const key of ['title', 'category', 'description', 'url', 'retailer', 'image', 'prompt']) $(`entry-${key}`).value = item?.[key] || '';
-  const collection = data.collections.find(c => c.id === item?.collectionId);
-  $('entry-collection').value = collection?.title || ''; $('entry-reel-url').value = collection?.url || '';
+
   $('entry-affiliate').checked = !!item?.affiliate; $('entry-published').checked = item ? item.published : true;
-  $('form-heading').textContent = item ? 'Edit entry' : 'Add an entry'; $('remove-entry').hidden = !item; formDirty = false; showType(); refreshList();
+  $('form-heading').textContent = item ? 'Edit entry' : 'Add an entry'; $('remove-entry').hidden = !item; formDirty = false; showType(); refreshList(); $('entry-collection').value = item?.collectionId || ''; showCollection();
 }
 function createId(title) { const base = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'entry'; let id = base, n = 2; while (data.entries.some(e => e.id === id)) id = `${base}-${n++}`; return id; }
 $('entry-type').addEventListener('change', showType);
-$('entry-collection').addEventListener('input', () => {
-  const collection = data.collections.find(c => c.title.toLowerCase() === $('entry-collection').value.trim().toLowerCase());
-  if (collection) $('entry-reel-url').value = collection.url || '';
-});
+function showCollection() {
+  const selectedId = $('entry-collection').value;
+  const collection = data.collections.find(c => c.id === selectedId);
+  $('collection-fields').hidden = !selectedId;
+  $('entry-collection-title').disabled = !selectedId;
+  $('entry-collection-title').required = !!selectedId;
+  $('entry-reel-url').disabled = !selectedId;
+  $('entry-collection-title').value = collection?.title || '';
+  $('entry-reel-url').value = collection?.url || '';
+}
+$('entry-collection').addEventListener('change', () => { showCollection(); formDirty = true; });
 $('entry-form').addEventListener('input', () => { formDirty = true; });
 $('new-entry').addEventListener('click', () => { if (formDirty && !confirm('Discard the changes in this form?')) return; fill(); $('entry-title').focus(); });
 $('entry-form').addEventListener('submit', event => {
@@ -39,21 +47,13 @@ $('entry-form').addEventListener('submit', event => {
   const item = { id: currentId || createId(value('title')), type: value('type'), title: value('title'), category: value('category'), description: value('description'), published: $('entry-published').checked, updated: new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }) };
   if (item.type === 'product') { item.url = value('url'); item.affiliate = $('entry-affiliate').checked; if (value('retailer')) item.retailer = value('retailer'); if (value('image')) item.image = value('image'); }
   else item.prompt = value('prompt');
-  let collections = data.collections.map(c => ({ ...c }));
-  if (value('reel-url') && !value('collection')) return status('Add a reel title before adding its link.');
-  if (value('collection')) {
-    let collection = collections.find(c => c.title.toLowerCase() === value('collection').toLowerCase());
-    if (!collection) {
-      const base = value('collection').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'reel';
-      let id = base, n = 2; while (collections.some(c => c.id === id)) id = `${base}-${n++}`;
-      collection = { id, title: value('collection') }; collections.unshift(collection);
-    }
-    if (value('reel-url')) collection.url = value('reel-url');
-    else if (currentId && data.entries.find(e => e.id === currentId)?.collectionId === collection.id) delete collection.url;
-    item.collectionId = collection.id;
-  }
-  const next = { collections, entries: currentId ? data.entries.map(e => e.id === currentId ? item : e) : [item, ...data.entries] };
-  try { validateContent(next); data = next; setDirty(true); fill(item); status('Entry saved to your working file. Download changes, then upload to GitHub to publish.'); } catch (error) { status(error.message); }
+  try {
+    const { collections, collectionId } = updateCollection(data.collections, value('collection'), value('collection-title'), value('reel-url'));
+    if (collectionId) item.collectionId = collectionId;
+    const next = { collections, entries: currentId ? data.entries.map(e => e.id === currentId ? item : e) : [item, ...data.entries] };
+    validateContent(next); data = next; setDirty(true); fill(item);
+    status('Entry and collection saved to your working file. Download changes, then upload to GitHub to publish.');
+  } catch (error) { status(error.message); }
 });
 $('remove-entry').addEventListener('click', () => { if (!currentId || !confirm('Remove this entry from your working file? The live Vault changes only after you upload the file.')) return; data.entries = data.entries.filter(e => e.id !== currentId); setDirty(true); fill(); status('Entry removed from your working file. Download and upload to publish the change.'); });
 $('download').addEventListener('click', () => {
@@ -66,5 +66,5 @@ $('import-file').addEventListener('change', async event => {
   try { const imported = validateContent(JSON.parse(await file.text())); data = { entries: imported.entries, collections: imported.collections || [] }; ready = true; setDirty(true); fill(); status(`Opened ${data.entries.length} entries. Changes stay in this page until downloaded.`); } catch (error) { status(`Could not open file: ${error.message}`); } event.target.value = '';
 });
 window.addEventListener('beforeunload', event => { if (dirty || formDirty) { event.preventDefault(); event.returnValue = ''; } });
-showType();
+showType(); showCollection();
 try { const response = await fetch('./content.json', { cache: 'no-store' }); if (!response.ok) throw new Error(); const loaded = validateContent(await response.json()); data = { entries: loaded.entries, collections: loaded.collections || [] }; ready = true; setDirty(false); fill(); status('Current content loaded.'); } catch { refreshList(); status('Could not load existing content. Reload or open a saved content file before making changes.'); }

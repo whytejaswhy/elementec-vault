@@ -1,4 +1,4 @@
-import { visibleEntries, searchEntries, safeUrl } from './lib.mjs?v=d710948';
+import { visibleEntries, searchEntries, safeUrl } from './lib.mjs?v=collection-titles-1';
 const $ = id => document.getElementById(id);
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 let entries = [], collections = [], activeCollection = new URLSearchParams(location.search).get('reel') || '', type = new URLSearchParams(location.search).get('type') === 'prompts' ? 'prompt' : 'product', activePrompt = null, loaded = false;
@@ -29,7 +29,7 @@ function render() {
     const section = el('section', 'collection');
     const heading = el('div', 'collection-heading');
     const copy = el('div');
-    copy.append(el('p', 'eyebrow', `FROM THE SAME REEL · ${members.length} ${type === 'product' ? (members.length === 1 ? 'PRODUCT' : 'PRODUCTS') : (members.length === 1 ? 'PROMPT' : 'PROMPTS')}`));
+    copy.append(el('p', 'eyebrow', `COLLECTION · ${members.length} ${type === 'product' ? (members.length === 1 ? 'PRODUCT' : 'PRODUCTS') : (members.length === 1 ? 'PROMPT' : 'PROMPTS')}`));
     const title = el('h2', '', collection.title); title.id = `collection-${collection.id}`;
     section.setAttribute('aria-labelledby', title.id); copy.append(title); heading.append(copy);
     const links = el('div', 'collection-links');

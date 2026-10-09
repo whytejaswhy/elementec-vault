@@ -30,6 +30,25 @@ export function validateContent(data) {
   return data;
 }
 export function visibleEntries(data) { return validateContent(data).entries.filter(item => item.published); }
+export function updateCollection(current, selectedId, title = '', url = '') {
+  const collections = current.map(collection => ({ ...collection }));
+  if (!selectedId) return { collections };
+  title = title.trim(); url = url.trim();
+  if (!title) throw new Error('Enter a collection title chosen by you or your team.');
+  if (url && !safeUrl(url)) throw new Error('Enter a full http or https reel link.');
+  let collection;
+  if (selectedId === '__new__') {
+    const base = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'collection';
+    let id = base, n = 2; while (collections.some(c => c.id === id)) id = `${base}-${n++}`;
+    collection = { id, title }; collections.unshift(collection);
+  } else {
+    collection = collections.find(c => c.id === selectedId);
+    if (!collection) throw new Error('Choose an existing collection or create a new one.');
+    collection.title = title;
+  }
+  if (url) collection.url = url; else delete collection.url;
+  return { collections, collectionId: collection.id };
+}
 export function searchEntries(entries, type, query = '', category = '', collections = []) {
   const words = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
   return entries.filter(item => item.type === type && (!category || item.category === category) && words.every(word => `${item.title} ${item.description} ${item.category} ${item.prompt || ''} ${collections.find(c => c.id === item.collectionId)?.title || ''}`.toLowerCase().includes(word)));
