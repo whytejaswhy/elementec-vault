@@ -1,4 +1,4 @@
-import { validateContent } from './lib.mjs';
+import { validateContent } from './lib.mjs?v=d710948';
 const $ = id => document.getElementById(id);
 let data = { entries: [], collections: [] }, currentId = null, dirty = false, formDirty = false, ready = false;
 const status = text => { $('editor-status').textContent = text; };

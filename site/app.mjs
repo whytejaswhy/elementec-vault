@@ -1,4 +1,4 @@
-import { visibleEntries, searchEntries, safeUrl } from './lib.mjs';
+import { visibleEntries, searchEntries, safeUrl } from './lib.mjs?v=d710948';
 const $ = id => document.getElementById(id);
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 let entries = [], collections = [], activeCollection = new URLSearchParams(location.search).get('reel') || '', type = new URLSearchParams(location.search).get('type') === 'prompts' ? 'prompt' : 'product', activePrompt = null, loaded = false;
