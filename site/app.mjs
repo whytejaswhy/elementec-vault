@@ -40,9 +40,9 @@ function openPrompt(item) {
   dialog.setAttribute('aria-labelledby', 'prompt-title'); dialog.setAttribute('aria-describedby', 'prompt-description');
   updateAddress(item.id); if (!dialog.open) dialog.showModal();
 }
-async function copy(text, success) {
+async function copy(text, success, copyingLink = false) {
   try { await navigator.clipboard.writeText(text); $('copy-feedback').textContent = success; }
-  catch { const range = document.createRange(); range.selectNodeContents($('prompt-text')); const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range); $('copy-feedback').textContent = 'Copy was unavailable. Select the prompt text and copy it manually.'; }
+  catch { if (copyingLink) { $('copy-feedback').textContent = 'Copy was unavailable. Copy the link from your browser’s address bar.'; return; } const range = document.createRange(); range.selectNodeContents($('prompt-text')); const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range); $('copy-feedback').textContent = 'Copy was unavailable. Select the prompt text and copy it manually.'; }
 }
 for (const tab of tabs) {
   tab.addEventListener('click', () => chooseType(tab.dataset.type));
@@ -51,7 +51,7 @@ for (const tab of tabs) {
 $('search').addEventListener('input', render); $('category').addEventListener('change', render);
 $('close-dialog').addEventListener('click', () => dialog.close()); dialog.addEventListener('close', () => updateAddress());
 $('copy-prompt').addEventListener('click', () => activePrompt && copy(activePrompt.prompt, 'Prompt copied.'));
-$('copy-link').addEventListener('click', () => activePrompt && copy(location.href, 'Link copied.'));
+$('copy-link').addEventListener('click', () => activePrompt && copy(location.href, 'Link copied.', true));
 chooseType(type, false);
 try {
   const response = await fetch('./content.json', { cache: 'no-store' }); if (!response.ok) throw new Error('Content is unavailable');

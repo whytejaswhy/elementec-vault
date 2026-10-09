@@ -1,3 +1,30 @@
 {
-  "entries": []
+  "entries": [
+    {
+      "id": "macbook-neo-13-silver-256gb",
+      "type": "product",
+      "title": "Apple MacBook Neo 13″",
+      "category": "Laptops",
+      "description": "A18 Pro chip, 8GB memory and 256GB SSD. Silver finish.",
+      "url": "https://link.amazon/B03o7pbSD",
+      "retailer": "Amazon",
+      "image": "https://m.media-amazon.com/images/I/61amETli1DL._SX679_.jpg",
+      "affiliate": true,
+      "published": true,
+      "updated": "2026-10-09"
+    },
+    {
+      "id": "samsung-qn2eh-55-2026",
+      "type": "product",
+      "title": "Samsung Neo QLED 4K TV · 55″",
+      "category": "TVs",
+      "description": "2026 QN2EH model with Quantum Mini LED. Model: QA55QN2EHAULXL.",
+      "url": "https://link.amazon/B0iNOhLok",
+      "retailer": "Amazon",
+      "image": "https://m.media-amazon.com/images/I/81-YfokfOLL._SX679_.jpg",
+      "affiliate": true,
+      "published": true,
+      "updated": "2026-10-09"
+    }
+  ]
 }

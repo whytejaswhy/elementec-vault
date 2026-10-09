@@ -13,7 +13,7 @@ function refreshList() {
   $('entries-list').replaceChildren(...nodes);
   $('categories').replaceChildren(...[...new Set(data.entries.map(e => e.category))].sort().map(c => new Option(c, c)));
 }
-function showType() { const isProduct = $('entry-type').value === 'product'; $('product-fields').hidden = !isProduct; $('prompt-fields').hidden = isProduct; $('entry-url').required = isProduct; $('entry-prompt').required = !isProduct; }
+function showType() { const isProduct = $('entry-type').value === 'product'; $('product-fields').hidden = !isProduct; $('prompt-fields').hidden = isProduct; $('entry-url').required = isProduct; $('entry-prompt').required = !isProduct; for (const input of $('product-fields').querySelectorAll('input')) input.disabled = !isProduct; $('entry-prompt').disabled = isProduct; }
 function fill(item = null) {
   currentId = item?.id || null; $('entry-form').reset();
   $('entry-type').value = item?.type || 'product';

@@ -30,7 +30,7 @@ GitHub's custom-domain verification is recommended. Add `elementec.co` under acc
 
 ## Content file
 
-`site/content.json` is the source of truth. The live file starts empty because no actual product links or approved prompts have been supplied. The `preview` folder contains clearly marked samples and is excluded from the Pages artifact. The repository is public: preview samples are not private.
+`site/content.json` is the source of truth. It contains Tejas's supplied Amazon links for the MacBook Neo and Samsung QN2EH TV, preserving the original shortened URLs and affiliate attribution. No public prompts have been supplied yet. The `preview` folder contains clearly marked samples and is excluded from the Pages artifact. The repository is public: preview samples are not private.
 
 Each entry has an `id`, `type` (`product` or `prompt`), `title`, `category`, `description`, `published`, and optional `updated` date (`YYYY-MM-DD`). Product entries have a full `url`, optional `retailer`, optional `image` URL, and optional `affiliate` flag. Prompt entries have the full `prompt` text. Using the editor fills these fields for you.
 
