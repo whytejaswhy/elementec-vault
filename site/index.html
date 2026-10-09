@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Find product links and copy useful prompts from Elementec.">
+  <meta name="theme-color" content="#171818">
+  <title>Elementec Vault</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#library">Skip to the Vault</a>
+  <header class="masthead"><a class="brand" href="./" aria-label="Elementec Vault home"><span class="brand-mark" aria-hidden="true">E</span><span>ELEMENTEC<span class="brand-sub">VAULT</span></span></a><a class="parent-link" href="https://elementec.co">elementec.co</a></header>
+  <main>
+    <section class="intro"><p class="eyebrow">THE ELEMENTEC COLLECTION</p><h1>Worth coming back to.</h1><p>Product links and useful prompts, all in one place.</p></section>
+    <p id="preview-note" class="notice" hidden>Preview examples only. These are not Elementec product recommendations.</p>
+    <section id="library" aria-label="The Vault">
+      <div class="toolbar"><div class="tabs" role="tablist" aria-label="Browse the Vault"><button id="products-tab" type="button" role="tab" aria-selected="true" aria-controls="results" data-type="product">Products <span id="products-count">0</span></button><button id="prompts-tab" type="button" role="tab" aria-selected="false" aria-controls="results" tabindex="-1" data-type="prompt">Prompts <span id="prompts-count">0</span></button></div><label class="search"><span class="sr-only">Search the Vault</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Find something in the Vault" autocomplete="off"></label></div>
+      <div class="results-heading"><label class="category-label">Category <select id="category"><option value="">All categories</option></select></label><p id="results-count" aria-live="polite"></p></div>
+      <div id="results" class="grid" role="tabpanel" aria-labelledby="products-tab" aria-busy="true"><p class="state">Opening the Vault…</p></div>
+      <p id="affiliate-note" class="affiliate-note" hidden>Some links are affiliate links. Elementec may earn a commission if you buy through them.</p>
+    </section>
+  </main>
+  <footer><span>ELEMENTEC VAULT</span><span>Keep the useful stuff close.</span></footer>
+  <dialog id="prompt-dialog"><div class="dialog-top"><span class="eyebrow" id="prompt-category">PROMPT</span><button id="close-dialog" class="icon-button" type="button" aria-label="Close prompt">×</button></div><h2 id="prompt-title"></h2><p id="prompt-description"></p><pre id="prompt-text"></pre><div class="dialog-actions"><button id="copy-prompt" class="button primary" type="button">Copy prompt</button><button id="copy-link" class="button secondary" type="button">Copy link</button></div><p id="copy-feedback" class="feedback" aria-live="polite"></p></dialog>
+  <noscript><p class="notice">Enable JavaScript to browse products and copy prompts.</p></noscript>
+</body>
+</html>
