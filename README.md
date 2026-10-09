@@ -16,6 +16,8 @@ Keep products and prompts in two columns on phones, including narrow 320px scree
 
 The editor runs in your browser. It cannot write to GitHub or publish changes by itself. Only people with repository write access can publish. Download changes before closing the editor. Hidden entries are still in the public JSON file and public repository; do not put private drafts or secrets here.
 
+Give related entries the same optional **Reel title** in the editor. They appear together under that title, while remaining searchable by product name. **Open collection** gives you a shareable page containing only that group; an optional **Reel link** adds **Watch reel** for the group. Reel links and groups survive editor imports, edits and downloads.
+
 New entries are placed first. Editing an entry preserves its stable ID, so prompt links keep working after name changes. Entries may be hidden from the public page, removed, or given an affiliate label. Prompts have **Copy prompt** and **Copy link** actions. Search covers names, descriptions, categories, and full prompt text.
 
 ## Initial publishing setup
@@ -34,7 +36,9 @@ GitHub's custom-domain verification is recommended. Add `elementec.co` under acc
 
 ## Content file
 
-`site/content.json` is the source of truth. It contains Tejas's supplied Amazon links for the MacBook Neo and Samsung QN2EH TV, preserving the original shortened URLs and affiliate attribution. No public prompts have been supplied yet. The `preview` folder contains clearly marked samples and is excluded from the Pages artifact. The repository is public: preview samples are not private.
+`site/content.json` is the source of truth. It contains Tejas's supplied Amazon links for the MacBook Neo and Samsung QN2EH TV, preserving the original shortened URLs and affiliate attribution. The four phones supplied on 9 October 2026 are grouped as “Phones from this reel”. No public prompts have been supplied yet. The `preview` folder contains clearly marked samples and is excluded from the Pages artifact. The repository is public: preview samples are not private.
+
+Optional `collections` contain a stable `id`, a `title`, and an optional reel `url`. An entry can refer to a collection with `collectionId`.
 
 Each entry has an `id`, `type` (`product` or `prompt`), `title`, `category`, `description`, `published`, and optional `updated` date (`YYYY-MM-DD`). Product entries have a full `url`, optional `retailer`, optional `image` URL, and optional `affiliate` flag. Prompt entries have the full `prompt` text. Using the editor fills these fields for you.
 

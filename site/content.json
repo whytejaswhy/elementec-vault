@@ -1,6 +1,62 @@
 {
   "entries": [
     {
+      "id": "samsung-galaxy-a56-5g",
+      "type": "product",
+      "title": "Samsung Galaxy A56 5G",
+      "category": "Phones",
+      "description": "Awesome Violet Glow · 8GB RAM + 256GB storage.",
+      "url": "https://link.amazon/B0fFxjfej",
+      "image": "https://m.media-amazon.com/images/I/71xIbwtt23L._SX679_.jpg",
+      "retailer": "Amazon",
+      "affiliate": true,
+      "published": true,
+      "updated": "2026-10-09",
+      "collectionId": "phones-reel-2026-10-09"
+    },
+    {
+      "id": "iqoo-z11-5g",
+      "type": "product",
+      "title": "iQOO Z11 5G",
+      "category": "Phones",
+      "description": "Aurora Green · 6GB RAM + 128GB storage.",
+      "url": "https://link.amazon/B0dAruXdV",
+      "image": "https://m.media-amazon.com/images/I/410Kg4T1dTL._SY300_SX300_QL70_FMwebp_.jpg",
+      "retailer": "Amazon",
+      "affiliate": true,
+      "published": true,
+      "updated": "2026-10-09",
+      "collectionId": "phones-reel-2026-10-09"
+    },
+    {
+      "id": "oneplus-nord-ce-6",
+      "type": "product",
+      "title": "OnePlus Nord CE 6",
+      "category": "Phones",
+      "description": "Pitch Black · 8GB RAM + 256GB storage.",
+      "url": "https://link.amazon/B07FKZ6zM",
+      "image": "https://m.media-amazon.com/images/I/414wEtgWfsL._SY300_SX300_QL70_FMwebp_.jpg",
+      "retailer": "Amazon",
+      "affiliate": true,
+      "published": true,
+      "updated": "2026-10-09",
+      "collectionId": "phones-reel-2026-10-09"
+    },
+    {
+      "id": "redmi-turbo-5",
+      "type": "product",
+      "title": "Redmi Turbo 5",
+      "category": "Phones",
+      "description": "Asphalt Black · 8GB RAM + 256GB storage.",
+      "url": "https://link.amazon/B0bNikYL8",
+      "image": "https://m.media-amazon.com/images/I/41oSmkKcg2L._SY300_SX300_QL70_FMwebp_.jpg",
+      "retailer": "Amazon",
+      "affiliate": true,
+      "published": true,
+      "updated": "2026-10-09",
+      "collectionId": "phones-reel-2026-10-09"
+    },
+    {
       "id": "macbook-neo-13-silver-256gb",
       "type": "product",
       "title": "Apple MacBook Neo 13″",
@@ -25,6 +81,12 @@
       "affiliate": true,
       "published": true,
       "updated": "2026-10-09"
+    }
+  ],
+  "collections": [
+    {
+      "id": "phones-reel-2026-10-09",
+      "title": "Phones from this reel"
     }
   ]
 }
