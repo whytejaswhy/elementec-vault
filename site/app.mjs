@@ -76,6 +76,16 @@ for (const tab of tabs) {
   tab.addEventListener('click', () => chooseType(tab.dataset.type));
   tab.addEventListener('keydown', event => { if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs[1] : tabs.find(t => t !== tab); chooseType(next.dataset.type); next.focus(); });
 }
+function setSearchOpen(open) {
+  $('intro-copy').hidden = open; $('open-search').hidden = open;
+  $('search-field').hidden = !open; $('close-search').hidden = !open;
+  $('open-search').setAttribute('aria-expanded', String(open));
+  if (open) $('search').focus();
+  else { $('search').value = ''; if (loaded) render(); $('open-search').focus(); }
+}
+$('open-search').addEventListener('click', () => setSearchOpen(true));
+$('close-search').addEventListener('click', () => setSearchOpen(false));
+$('search').addEventListener('keydown', event => { if (event.key === 'Escape') { event.preventDefault(); setSearchOpen(false); } });
 $('search').addEventListener('input', render); $('category').addEventListener('change', render);
 $('close-dialog').addEventListener('click', () => dialog.close()); dialog.addEventListener('close', () => updateAddress());
 $('copy-prompt').addEventListener('click', () => activePrompt && copy(activePrompt.prompt, 'Prompt copied.'));
