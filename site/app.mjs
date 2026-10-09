@@ -1,8 +1,10 @@
+import { initQuickAccess } from './quick-access.mjs?v=quick-access-1';
 import { visibleEntries, searchEntries, safeUrl } from './lib.mjs?v=collection-titles-1';
 const $ = id => document.getElementById(id);
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 let entries = [], collections = [], activeCollection = new URLSearchParams(location.search).get('reel') || '', type = new URLSearchParams(location.search).get('type') === 'prompts' ? 'prompt' : 'product', activePrompt = null, loaded = false;
 const dialog = $('prompt-dialog');
+const offerQuickAccess = initQuickAccess();
 function el(tag, className, text) { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; }
 function state(title, text) { const box = el('div', 'state'); box.append(el('strong', '', title), el('span', '', text)); $('results').replaceChildren(box); }
 function updateAddress(id = '') { const url = new URL(location.href); url.searchParams.set('type', type === 'prompt' ? 'prompts' : 'products'); if (activeCollection) url.searchParams.set('reel', activeCollection); else url.searchParams.delete('reel'); url.hash = id; history.replaceState(null, '', url); }
@@ -94,4 +96,5 @@ try {
     chooseType(selected.type, false);
     if (selected.type === 'prompt') openPrompt(selected); else document.getElementById(selected.id)?.scrollIntoView();
   }
+  if (data.preview !== true) offerQuickAccess();
 } catch { $('results').setAttribute('aria-busy', 'false'); $('results-count').textContent = ''; state('The Vault is unavailable right now.', 'Please reload the page or check back in a moment.'); }

@@ -21,8 +21,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Validate content
         run: node scripts/check-content.mjs
-      - name: Check collection editing
-        run: node --test scripts/collections.test.mjs
+      - name: Check site behavior
+        run: node --test scripts/*.test.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload public site

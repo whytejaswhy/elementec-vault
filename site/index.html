@@ -8,8 +8,9 @@
   <meta name="theme-color" content="#191a1c" media="(prefers-color-scheme: dark)">
   <title>Elementec Vault</title>
   <link rel="icon" href="brand/header-blue-lime.jpg" type="image/jpeg"><link rel="preload" href="fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=compact-islands-1">
-  <script type="module" src="app.mjs?v=compact-islands-1"></script>
+  <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="brand/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Vault">
+  <link rel="stylesheet" href="styles.css?v=quick-access-1">
+  <script type="module" src="app.mjs?v=quick-access-1"></script>
 </head>
 <body>
   <a class="skip" href="#library">Skip to the Vault</a>
@@ -26,8 +27,16 @@
       <div id="results" class="results" role="tabpanel" aria-labelledby="products-tab" aria-busy="true"><p class="state">Opening the Vault…</p></div>
     </section>
   </main>
-  <footer><span>ELEMENTEC VAULT</span><span>Keep the useful stuff close.</span></footer>
+  <footer><span>ELEMENTEC VAULT</span><span>Keep the useful stuff close.</span><button id="save-vault" class="footer-save" type="button">Save the Vault</button></footer>
   <dialog id="prompt-dialog"><div class="dialog-top"><span class="eyebrow" id="prompt-category">PROMPT</span><button id="close-dialog" class="icon-button" type="button" aria-label="Close prompt">×</button></div><h2 id="prompt-title"></h2><p id="prompt-description"></p><pre id="prompt-text"></pre><div class="dialog-actions"><button id="copy-prompt" class="button primary" type="button">Copy prompt</button><button id="copy-link" class="button secondary" type="button">Copy link</button></div><p id="copy-feedback" class="feedback" aria-live="polite"></p></dialog>
+  <dialog id="quick-access-dialog" class="quick-access-dialog" aria-labelledby="quick-access-title" aria-describedby="quick-access-description">
+    <div class="dialog-top"><span class="brand-mark" aria-hidden="true"></span><button id="close-quick-access" class="icon-button" type="button" aria-label="Close save reminder" autofocus>×</button></div>
+    <h2 id="quick-access-title">Keep the Vault close.</h2>
+    <p id="quick-access-description">Bookmark this page or add it to your device for quick access to product links and prompts, anytime.</p>
+    <div class="quick-access-actions"><button id="install-vault" class="button primary" type="button">Install web app</button><button id="bookmark-vault" class="button secondary" type="button">Bookmark</button></div>
+    <section id="quick-help" class="quick-help" aria-live="polite" hidden><h3 id="quick-help-title"></h3><p id="quick-help-text"></p></section>
+    <button id="later-quick-access" class="later-button" type="button">Maybe later</button>
+  </dialog>
   <noscript><p class="notice">Enable JavaScript to browse products and copy prompts.</p></noscript>
 </body>
 </html>
