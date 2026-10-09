@@ -86,7 +86,8 @@
   "collections": [
     {
       "id": "phones-reel-2026-10-09",
-      "title": "Phones under 40,000"
+      "title": "Phones under 40,000",
+      "tone": "lime"
     }
   ]
 }

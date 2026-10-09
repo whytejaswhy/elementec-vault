@@ -18,7 +18,7 @@ Keep products and prompts in two columns on phones, including narrow 320px scree
 
 The editor runs in your browser. It cannot write to GitHub or publish changes by itself. Only people with repository write access can publish. Download changes before closing the editor. Hidden entries are still in the public JSON file and public repository; do not put private drafts or secrets here.
 
-Collection titles are chosen by Tejas or an assigned team member to describe the reel. In the editor, choose an existing **Collection**, or **Create a new collection…** and enter its exact **Collection title**. Assign related entries to that collection. Editing an existing collection title renames the heading for all its members while keeping the shared URL stable. Two separate reels can have separate collections even if their titles match. Product categories, such as Phones, remain separate from collection titles. **Open collection** gives you a shareable page containing only that group; an optional **Reel link** adds **Watch reel** for the group. Reel links and groups survive editor imports, edits and downloads.
+Collection titles are chosen by Tejas or an assigned team member to describe the reel. In the editor, choose an existing **Collection**, or **Create a new collection…** and enter its exact **Collection title**. Assign related entries to that collection. Editing an existing collection title renames the heading for all its members while keeping the shared URL stable. Two separate reels can have separate collections even if their titles match. Product categories, such as Phones, remain separate from collection titles. A shared collection URL using `?type=products&reel=<collection-id>` opens only that group; an optional **Reel link** adds **Watch reel** for the group. Reel links and groups survive editor imports, edits and downloads.
 
 New entries are placed first. Editing an entry preserves its stable ID, so prompt links keep working after name changes. Entries may be hidden from the public page, removed, or marked as affiliate links in the content file. Affiliate metadata is retained for link attribution; cards omit labels, dates, and descriptions. Prompts have **Copy prompt** and **Copy link** actions. Search covers names, descriptions, categories, and full prompt text.
 
@@ -40,7 +40,7 @@ GitHub's custom-domain verification is recommended. Add `elementec.co` under acc
 
 `site/content.json` is the source of truth. It contains Tejas's supplied Amazon links for the MacBook Neo and Samsung QN2EH TV, preserving the original shortened URLs and affiliate attribution. The four phones supplied on 9 October 2026 are grouped under Tejas’s title “Phones under 40,000”. No public prompts have been supplied yet. The `preview` folder contains clearly marked samples and is excluded from the Pages artifact. The repository is public: preview samples are not private.
 
-Optional `collections` contain a stable `id`, a `title`, and an optional reel `url`. An entry can refer to a collection with `collectionId`.
+Optional `collections` contain a stable `id`, a `title`, an optional reel `url`, and an optional `tone` (`lavender`, `lime`, or `blue`). An entry can refer to a collection with `collectionId`.
 
 Each entry has an `id`, `type` (`product` or `prompt`), `title`, `category`, `description`, `published`, and optional `updated` date (`YYYY-MM-DD`). Product entries have a full `url`, optional `retailer`, optional `image` URL, and optional `affiliate` flag. Prompt entries have the full `prompt` text. Using the editor fills these fields for you.
 
@@ -61,4 +61,4 @@ The first public visit shows a dismissible bookmark or install reminder, remembe
 
 `manifest.webmanifest` and branded app icons support standalone installation over HTTPS. Installation depends on the browser and its eligibility checks; adding a Home Screen shortcut is also an option. The app fetches current content online and makes no offline-access promise.
 
-The default Vault shows every matching entry in one grid, with equal prominence. Named reel collections are available through the Collection filter and stable shared links; selecting one displays its title and count inside that collection’s island.
+The default Vault shows every matching entry in one grid, with equal prominence. Products from the same reel stay adjacent and share one background color. Each new collection gets a randomly assigned, persisted tone from the existing Journal lavender, lime, and blue palette, favoring unused tones before repeating. Ungrouped products use the neutral surface. Stable shared collection links remain available, while viewers have no collection dropdown.

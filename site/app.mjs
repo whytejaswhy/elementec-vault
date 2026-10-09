@@ -1,5 +1,5 @@
 import { initQuickAccess } from './quick-access.mjs?v=quick-access-1';
-import { visibleEntries, searchEntries, safeUrl } from './lib.mjs?v=collection-titles-1';
+import { visibleEntries, searchEntries, safeUrl, collectionTone, groupReelEntries } from './lib.mjs?v=reel-colors-1';
 const $ = id => document.getElementById(id);
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 let entries = [], collections = [], activeCollection = new URLSearchParams(location.search).get('reel') || '', type = new URLSearchParams(location.search).get('type') === 'prompts' ? 'prompt' : 'product', activePrompt = null, loaded = false;
@@ -15,10 +15,6 @@ function chooseType(next, update = true) {
   $('results').setAttribute('aria-labelledby', `${type === 'product' ? 'products' : 'prompts'}-tab`);
   const categories = [...new Set(entries.filter(item => item.type === type && (!activeCollection || item.collectionId === activeCollection)).map(item => item.category))].sort();
   $('category').replaceChildren(new Option('All categories', ''), ...categories.map(c => new Option(c, c)));
-  const availableCollections = collections.filter(c => entries.some(item => item.type === type && item.collectionId === c.id));
-  $('collection-filter').replaceChildren(new Option('All collections', ''), ...availableCollections.map(c => new Option(c.title, c.id)));
-  $('collection-filter').value = activeCollection;
-  $('collection-filter-label').hidden = !availableCollections.length;
   if (update) updateAddress();
   if (loaded) render();
 }
@@ -28,7 +24,7 @@ function render() {
   $('results-count').textContent = `${list.length} ${type === 'product' ? (list.length === 1 ? 'product' : 'products') : (list.length === 1 ? 'prompt' : 'prompts')}`;
   if (!list.length) { const hasItems = entries.some(item => item.type === type); state(hasItems ? 'Nothing matches yet.' : `${type === 'product' ? 'Product links' : 'Prompts'} are coming soon.`, hasItems ? 'Try another search or choose All categories.' : 'Check back here for the next additions to the Vault.'); return; }
   if (!activeCollection) {
-    const grid = el('div', 'grid'); grid.append(...list.map(cardFor)); $('results').replaceChildren(grid); return;
+    const grid = el('div', 'grid'); grid.append(...groupReelEntries(list).map(cardFor)); $('results').replaceChildren(grid); return;
   }
   const sections = [];
   for (const collection of collections.filter(c => c.id === activeCollection)) {
@@ -54,6 +50,8 @@ function render() {
 }
 function cardFor(item) {
     const card = el('article', 'card'); card.id = item.id;
+    const collection = collections.find(c => c.id === item.collectionId);
+    if (collection) { card.dataset.reelColor = collectionTone(collection); card.dataset.collection = collection.id; card.setAttribute('aria-description', `From ${collection.title}`); }
     if (item.image && safeUrl(item.image)) { const image = el('img', 'card-image'); image.src = safeUrl(item.image); image.alt = item.title; image.loading = 'lazy'; image.addEventListener('error', () => image.remove(), { once: true }); card.append(image); }
     const meta = el('div', 'card-meta'); meta.append(el('span', 'category', item.category));
     card.append(meta);
@@ -79,7 +77,6 @@ for (const tab of tabs) {
   tab.addEventListener('keydown', event => { if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return; event.preventDefault(); const next = event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs[1] : tabs.find(t => t !== tab); chooseType(next.dataset.type); next.focus(); });
 }
 $('search').addEventListener('input', render); $('category').addEventListener('change', render);
-$('collection-filter').addEventListener('change', () => { activeCollection = $('collection-filter').value; chooseType(type); });
 $('close-dialog').addEventListener('click', () => dialog.close()); dialog.addEventListener('close', () => updateAddress());
 $('copy-prompt').addEventListener('click', () => activePrompt && copy(activePrompt.prompt, 'Prompt copied.'));
 $('copy-link').addEventListener('click', () => activePrompt && copy(location.href, 'Link copied.', true));

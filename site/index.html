@@ -9,8 +9,8 @@
   <title>Elementec Vault</title>
   <link rel="icon" href="brand/header-blue-lime.jpg" type="image/jpeg"><link rel="preload" href="fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="brand/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Vault">
-  <link rel="stylesheet" href="styles.css?v=circle-actions-1">
-  <script type="module" src="app.mjs?v=circle-actions-1"></script>
+  <link rel="stylesheet" href="styles.css?v=reel-colors-1">
+  <script type="module" src="app.mjs?v=reel-colors-1"></script>
 </head>
 <body>
   <a class="skip" href="#library">Skip to the Vault</a>
@@ -23,7 +23,7 @@
       <div class="search-panel"><label class="search"><span class="sr-only">Search the Vault</span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="search" type="search" placeholder="Find something in the Vault" autocomplete="off"></label></div>
       <div class="toolbar"><div class="tabs" role="tablist" aria-label="Browse the Vault"><button id="products-tab" type="button" role="tab" aria-selected="true" aria-controls="results" data-type="product">Products <span id="products-count">0</span></button><button id="prompts-tab" type="button" role="tab" aria-selected="false" aria-controls="results" tabindex="-1" data-type="prompt">Prompts <span id="prompts-count">0</span></button></div></div>
       </div>
-      <div class="results-heading"><label class="category-label">Category <select id="category"><option value="">All categories</option></select></label><label id="collection-filter-label" class="category-label collection-filter" hidden>Collection <select id="collection-filter"><option value="">All collections</option></select></label><p id="results-count" aria-live="polite"></p></div>
+      <div class="results-heading"><label class="category-label">Category <select id="category"><option value="">All categories</option></select></label><p id="results-count" aria-live="polite"></p></div>
       <div id="results" class="results" role="tabpanel" aria-labelledby="products-tab" aria-busy="true"><p class="state">Opening the Vault…</p></div>
     </section>
   </main>

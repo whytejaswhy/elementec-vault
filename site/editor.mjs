@@ -1,4 +1,4 @@
-import { validateContent, updateCollection } from './lib.mjs?v=collection-titles-1';
+import { validateContent, updateCollection, assignCollectionTones } from './lib.mjs?v=reel-colors-1';
 const $ = id => document.getElementById(id);
 let data = { entries: [], collections: [] }, currentId = null, dirty = false, formDirty = false, ready = false;
 const status = text => { $('editor-status').textContent = text; };
@@ -63,8 +63,8 @@ $('download').addEventListener('click', () => {
 $('import-file').addEventListener('change', async event => {
   const file = event.target.files[0]; if (!file) return;
   if ((dirty || formDirty) && !confirm('Replace the current working file with this file? Download your changes first if you want to keep them.')) { event.target.value = ''; return; }
-  try { const imported = validateContent(JSON.parse(await file.text())); data = { entries: imported.entries, collections: imported.collections || [] }; ready = true; setDirty(true); fill(); status(`Opened ${data.entries.length} entries. Changes stay in this page until downloaded.`); } catch (error) { status(`Could not open file: ${error.message}`); } event.target.value = '';
+  try { const imported = validateContent(JSON.parse(await file.text())); data = { entries: imported.entries, collections: assignCollectionTones(imported.collections || []) }; ready = true; setDirty(true); fill(); status(`Opened ${data.entries.length} entries. Changes stay in this page until downloaded.`); } catch (error) { status(`Could not open file: ${error.message}`); } event.target.value = '';
 });
 window.addEventListener('beforeunload', event => { if (dirty || formDirty) { event.preventDefault(); event.returnValue = ''; } });
 showType(); showCollection();
-try { const response = await fetch('./content.json', { cache: 'no-store' }); if (!response.ok) throw new Error(); const loaded = validateContent(await response.json()); data = { entries: loaded.entries, collections: loaded.collections || [] }; ready = true; setDirty(false); fill(); status('Current content loaded.'); } catch { refreshList(); status('Could not load existing content. Reload or open a saved content file before making changes.'); }
+try { const response = await fetch('./content.json', { cache: 'no-store' }); if (!response.ok) throw new Error(); const loaded = validateContent(await response.json()); data = { entries: loaded.entries, collections: assignCollectionTones(loaded.collections || []) }; ready = true; setDirty(false); fill(); status('Current content loaded.'); } catch { refreshList(); status('Could not load existing content. Reload or open a saved content file before making changes.'); }

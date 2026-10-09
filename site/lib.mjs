@@ -1,3 +1,30 @@
+export const COLLECTION_TONES = ['lavender', 'lime', 'blue'];
+export function assignCollectionTones(current, random = Math.random) {
+  const counts = Object.fromEntries(COLLECTION_TONES.map(tone => [tone, current.filter(c => c.tone === tone).length]));
+  return current.map(collection => {
+    if (COLLECTION_TONES.includes(collection.tone)) return { ...collection };
+    const leastUsed = Math.min(...Object.values(counts));
+    const choices = COLLECTION_TONES.filter(tone => counts[tone] === leastUsed);
+    const tone = choices[Math.min(choices.length - 1, Math.floor(random() * choices.length))];
+    counts[tone]++;
+    return { ...collection, tone };
+  });
+}
+export function collectionTone(collection) {
+  if (COLLECTION_TONES.includes(collection?.tone)) return collection.tone;
+  // Older content files use a stable fallback until the editor saves their assigned color.
+  let hash = 0; for (const char of collection?.id || '') hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  return COLLECTION_TONES[hash % COLLECTION_TONES.length];
+}
+export function groupReelEntries(entries) {
+  const groups = new Map();
+  for (const item of entries) {
+    const key = item.collectionId ? `reel:${item.collectionId}` : `entry:${item.id}`;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  }
+  return [...groups.values()].flat();
+}
 export function safeUrl(value) {
   if (typeof value !== 'string' || !value.trim()) return null;
   try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : null; } catch { return null; }
@@ -10,6 +37,7 @@ export function validateContent(data) {
     if (!collection || typeof collection.id !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(collection.id) || collectionIds.has(collection.id)) throw new Error('Each collection needs a unique lowercase ID.');
     if (typeof collection.title !== 'string' || !collection.title.trim()) throw new Error('Each collection needs a title.');
     if (collection.url && !safeUrl(collection.url)) throw new Error('The reel link must be a full http or https URL.');
+    if (collection.tone !== undefined && !COLLECTION_TONES.includes(collection.tone)) throw new Error('Choose a collection color from the Journal theme palette.');
     collectionIds.add(collection.id);
   }
   const ids = new Set();
@@ -47,7 +75,7 @@ export function updateCollection(current, selectedId, title = '', url = '') {
     collection.title = title;
   }
   if (url) collection.url = url; else delete collection.url;
-  return { collections, collectionId: collection.id };
+  return { collections: assignCollectionTones(collections), collectionId: collection.id };
 }
 export function searchEntries(entries, type, query = '', category = '', collections = []) {
   const words = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
