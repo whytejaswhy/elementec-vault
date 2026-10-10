@@ -24,7 +24,18 @@ function render() {
   $('results-count').textContent = `${list.length} ${type === 'product' ? (list.length === 1 ? 'product' : 'products') : (list.length === 1 ? 'prompt' : 'prompts')}`;
   if (!list.length) { const hasItems = entries.some(item => item.type === type); state(hasItems ? 'Nothing matches yet.' : `${type === 'product' ? 'Product links' : 'Prompts'} are coming soon.`, hasItems ? 'Try another search or choose All categories.' : 'Check back here for the next additions to the Vault.'); return; }
   if (!activeCollection) {
-    const grid = el('div', 'grid'); grid.append(...groupReelEntries(list).map(cardFor)); $('results').replaceChildren(grid); return;
+    const grid = el('div', 'grid');
+    const browsing = type === 'product' && !$('search').value.trim() && !$('category').value;
+    const shown = new Set();
+    for (const item of groupReelEntries(list)) {
+      const collection = browsing && collections.find(c => c.id === item.collectionId);
+      const members = collection ? list.filter(member => member.collectionId === collection.id) : [];
+      if (members.length > 1) {
+        if (shown.has(collection.id)) continue;
+        shown.add(collection.id); grid.append(folderFor(collection, members));
+      } else grid.append(cardFor(item));
+    }
+    $('results').replaceChildren(grid); return;
   }
   const sections = [];
   for (const collection of collections.filter(c => c.id === activeCollection)) {
@@ -48,6 +59,42 @@ function render() {
   }
   $('results').replaceChildren(...sections);
 }
+function folderFor(collection, members) {
+  const folder = el('button', 'card folder-card'); folder.type = 'button';
+  folder.dataset.reelColor = collectionTone(collection);
+  folder.setAttribute('aria-label', `Open ${collection.title}, ${members.length} products`);
+  folder.setAttribute('aria-haspopup', 'dialog');
+  const previews = el('span', 'folder-previews'); previews.setAttribute('aria-hidden', 'true');
+  const slots = members.length > 4 ? members.slice(0, 3) : members.slice(0, 4);
+  for (const item of slots) {
+    const slot = el('span', 'folder-preview');
+    if (item.image && safeUrl(item.image)) {
+      const image = el('img'); image.src = safeUrl(item.image); image.alt = ''; image.loading = 'lazy';
+      image.addEventListener('error', () => { image.remove(); slot.textContent = item.title; }, {once:true}); slot.append(image);
+    } else slot.textContent = item.title;
+    previews.append(slot);
+  }
+  if (members.length > 4) previews.append(el('span', 'folder-preview folder-more', `+${members.length - 3}`));
+  const bottom = el('span', 'folder-bottom');
+  const copy = el('span', 'folder-copy'); copy.append(el('span', 'folder-title', collection.title), el('span', 'folder-count', `${members.length} products`));
+  const expand = el('span', 'folder-expand'); expand.setAttribute('aria-hidden', 'true');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('viewBox','0 0 24 24');
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('d','M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5'); svg.append(path); expand.append(svg);
+  bottom.append(copy, expand); folder.append(previews, bottom);
+  folder.addEventListener('click', () => openFolder(collection, members));
+  return folder;
+}
+function openFolder(collection, members) {
+  $('folder-title').textContent = collection.title;
+  $('folder-products').replaceChildren(...members.map(cardFor));
+  document.body.classList.add('folder-open'); $('folder-dialog').showModal();
+}
+$('folder-dialog').addEventListener('close', () => { document.body.classList.remove('folder-open'); $('folder-products').replaceChildren(); });
+$('close-folder').addEventListener('click', () => $('folder-dialog').close());
+$('folder-dialog').addEventListener('click', event => { if (event.target === $('folder-dialog')) {
+  const bounds = $('folder-dialog').getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) $('folder-dialog').close();
+} });
 function cardFor(item) {
     const card = el('article', 'card'); card.id = item.id;
     const collection = collections.find(c => c.id === item.collectionId);
@@ -104,7 +151,12 @@ try {
   if (selected) {
     if (activeCollection && selected.collectionId !== activeCollection) activeCollection = selected.collectionId || '';
     chooseType(selected.type, false);
-    if (selected.type === 'prompt') openPrompt(selected); else document.getElementById(selected.id)?.scrollIntoView();
+    if (selected.type === 'prompt') openPrompt(selected);
+    else {
+      const collection = collections.find(c => c.id === selected.collectionId);
+      if (!document.getElementById(selected.id) && collection) openFolder(collection, entries.filter(item => item.type === 'product' && item.collectionId === collection.id));
+      document.getElementById(selected.id)?.scrollIntoView({ block: 'nearest' });
+    }
   }
   if (data.preview !== true) offerQuickAccess();
 } catch { $('results').setAttribute('aria-busy', 'false'); $('results-count').textContent = ''; state('The Vault is unavailable right now.', 'Please reload the page or check back in a moment.'); }

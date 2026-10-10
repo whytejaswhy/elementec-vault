@@ -64,3 +64,16 @@ dialog{background:var(--surface);color:var(--ink);border:1px solid var(--seam);b
 
 /* Reel colors use existing Journal lavender, lime, and blue theme tokens. */
 .card[data-reel-color="lavender"]{background:var(--soft)}.card[data-reel-color="lime"]{background:color-mix(in srgb,var(--primary) 30%,var(--surface))}.card[data-reel-color="blue"]{background:color-mix(in srgb,var(--focus) 20%,var(--surface))}
+
+/* Interactive reel folder exploration. */
+.folder-card{border:0;text-align:left;color:var(--ink);gap:14px;transition:filter .15s ease}.folder-card:hover{filter:brightness(.97)}.folder-card:focus-visible{outline-offset:-4px}
+.folder-previews{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:6px;height:clamp(100px,30vw,160px);padding:6px;background:color-mix(in srgb,var(--surface) 45%,transparent);border:1px solid var(--line);border-radius:12px}
+.folder-preview{display:flex;align-items:center;justify-content:center;min-width:0;min-height:0;background:#fff;border-radius:7px;overflow:hidden;font-size:.6rem;padding:3px;color:#161719}.folder-preview img{width:100%;height:100%;object-fit:contain}.folder-more{font-size:1.3rem;font-weight:700;background:var(--surface);color:var(--ink)}
+.folder-bottom{display:flex;align-items:end;gap:8px;margin-top:auto}.folder-copy{display:flex;flex-direction:column;gap:5px;min-width:0;flex:1}.folder-title{font-size:clamp(1rem,4.1vw,1.25rem);font-weight:700;letter-spacing:-.04em;line-height:1.3;overflow-wrap:anywhere}.folder-count{font-size:.72rem;color:var(--ink);opacity:.8}.folder-expand{display:flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;background:var(--primary);color:var(--primary-ink);border-radius:50%;font-size:1.6rem;line-height:1}
+.folder-dialog{width:min(650px,calc(100% - 24px));max-height:90dvh;padding:12px;overflow:auto}.folder-dialog-top{display:flex;align-items:start;justify-content:space-between;gap:16px;padding:8px 6px 18px}.folder-dialog-top h2{margin:0;font-size:1.4rem;line-height:1.3}.folder-dialog-top .icon-button{flex-shrink:0}.folder-dialog .card{padding:12px 10px}.folder-dialog .card h2{font-size:1rem}.folder-dialog .card-image{height:clamp(100px,30vw,160px)}.folder-dialog .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:601px){.folder-previews{height:180px}.folder-title{font-size:1.6rem}.folder-dialog{padding:18px}.folder-dialog-top h2{font-size:1.75rem}.folder-dialog .card{padding:18px}.folder-dialog .card h2{font-size:1.25rem}}
+@media(prefers-reduced-motion:reduce){.folder-card{transition:none}}
+
+.folder-expand svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.8;fill:none}
+
+.results>.grid{background:transparent;overflow:visible}.results>.grid>.card{box-shadow:0 0 0 1px var(--seam)}body.folder-open{overflow:hidden}

@@ -9,8 +9,8 @@
   <title>Elementec Vault</title>
   <link rel="icon" href="brand/header-blue-lime.jpg" type="image/jpeg"><link rel="preload" href="fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="brand/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="Vault">
-  <link rel="stylesheet" href="styles.css?v=inline-search-1">
-  <script type="module" src="app.mjs?v=inline-search-1"></script>
+  <link rel="stylesheet" href="styles.css?v=reel-folders-1">
+  <script type="module" src="app.mjs?v=reel-folders-1"></script>
 </head>
 <body>
   <a class="skip" href="#library">Skip to the Vault</a>
@@ -32,6 +32,10 @@
     </section>
   </main>
   <footer><span>ELEMENTEC VAULT</span><span>Keep the useful stuff close.</span><button id="save-vault" class="footer-save" type="button">Save the Vault</button></footer>
+  <dialog id="folder-dialog" class="folder-dialog" aria-labelledby="folder-title">
+    <div class="folder-dialog-top"><h2 id="folder-title"></h2><button id="close-folder" class="icon-button" type="button" aria-label="Close collection" autofocus>×</button></div>
+    <div id="folder-products" class="grid"></div>
+  </dialog>
   <dialog id="prompt-dialog"><div class="dialog-top"><span class="eyebrow" id="prompt-category">PROMPT</span><button id="close-dialog" class="icon-button" type="button" aria-label="Close prompt">×</button></div><h2 id="prompt-title"></h2><p id="prompt-description"></p><pre id="prompt-text"></pre><div class="dialog-actions"><button id="copy-prompt" class="button primary" type="button">Copy prompt</button><button id="copy-link" class="button secondary" type="button">Copy link</button></div><p id="copy-feedback" class="feedback" aria-live="polite"></p></dialog>
   <dialog id="quick-access-dialog" class="quick-access-dialog" aria-labelledby="quick-access-title" aria-describedby="quick-access-description">
     <div class="dialog-top"><span class="brand-mark" aria-hidden="true"></span><button id="close-quick-access" class="icon-button" type="button" aria-label="Close save reminder" autofocus>×</button></div>
