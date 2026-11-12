@@ -1,6 +1,6 @@
 # Elementec Vault
 
-A lightweight product and prompt library for **vault.elementec.co**, hosted on GitHub Pages.
+A lightweight product and prompt library for **vault.elementec.co/elementec/**, hosted on GitHub Pages.
 
 ## UI direction
 
@@ -8,12 +8,14 @@ Show category labels in rounded, bordered badges. Keep product and prompt cards 
 
 Keep products and prompts in two columns on phones, including narrow 320px screens. Follow the current live [Elementec Journal](https://elementec.co/journal), not the retired ChatGPT Site or its local checkout. The theme uses Satoshi, the blue-to-lime brand mark, rounded joined panels, lime action buttons, and system light/dark colours. Light mode uses `#f7f7f5` paper and white surfaces; dark mode uses `#191a1c` paper and `#232427` surfaces. Cards expand to three columns on wider desktop screens. Keep prompt reading and copy actions in the full-width dialog. The current font and brand mark are bundled so the Vault uses the same assets as the Journal. Recheck the live Journal before future theme changes.
 
+The former root URL and `/edit.html` forward to the Elementec page and editor, preserving the query and fragment on shared links.
+
 ## Add products and prompts
 
-1. Open `https://vault.elementec.co/edit.html`.
+1. Open `https://vault.elementec.co/elementec/edit.html`.
 2. Add a product link or paste a full prompt. Save the entry to your working file.
 3. Download changes. This downloads `content.json`.
-4. Click **Upload to GitHub**, upload that file into the `site` folder, and commit the change.
+4. Click **Upload to GitHub**, upload that file into the `site/elementec` folder, and commit the change.
 5. The **Publish Elementec Vault** workflow validates the content and updates the site.
 
 The editor runs in your browser. It cannot write to GitHub or publish changes by itself. Only people with repository write access can publish. Download changes before closing the editor. Hidden entries are still in the public JSON file and public repository; do not put private drafts or secrets here.
@@ -38,17 +40,17 @@ GitHub's custom-domain verification is recommended. Add `elementec.co` under acc
 
 ## Content file
 
-`site/content.json` is the source of truth. It contains Tejas's supplied Amazon links for the MacBook Neo and Samsung QN2EH TV, preserving the original shortened URLs and affiliate attribution. The four phones supplied on 9 October 2026 are grouped under Tejas’s title “Phones under 40,000”. No public prompts have been supplied yet. The `preview` folder contains clearly marked samples and is excluded from the Pages artifact. The repository is public: preview samples are not private.
+`site/elementec/content.json` is the source of truth. It contains Tejas's supplied Amazon links for the MacBook Neo and Samsung QN2EH TV, preserving the original shortened URLs and affiliate attribution. The four phones supplied on 9 October 2026 are grouped under Tejas’s title “Phones under 40,000”. No public prompts have been supplied yet. The `preview` folder contains clearly marked samples and is excluded from the Pages artifact. The repository is public: preview samples are not private.
 
 Optional `collections` contain a stable `id`, a `title`, an optional reel `url`, and an optional `tone` (`lavender`, `lime`, or `blue`). An entry can refer to a collection with `collectionId`.
 
 Each entry has an `id`, `type` (`product` or `prompt`), `title`, `category`, `description`, `published`, and optional `updated` date (`YYYY-MM-DD`). Product entries have a full `url`, optional `retailer`, optional `image` URL, and optional `affiliate` flag. Prompt entries have the full `prompt` text. Using the editor fills these fields for you.
 
-To edit directly, open `site/content.json` in GitHub and use the pencil button. A failing validation workflow leaves the last successful site version in place; fix the content file and commit again.
+To edit directly, open `site/elementec/content.json` in GitHub and use the pencil button. A failing validation workflow leaves the last successful site version in place; fix the content file and commit again.
 
 ## Local preview
 
-Serve `site` with any static HTTP server. For a populated preview, copy `site` to a temporary directory and replace that copy's `content.json` with `preview/content.json`; never substitute those samples into the live content file.
+Serve `site` with any static HTTP server. For a populated preview, copy `site` to a temporary directory and replace that copy's `elementec/content.json` with `preview/content.json`; never substitute those samples into the live content file.
 
 ## References
 

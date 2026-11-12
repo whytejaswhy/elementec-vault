@@ -3,7 +3,7 @@
   "name": "Elementec Vault",
   "short_name": "Vault",
   "description": "Product links and useful prompts from Elementec, ready when you need them.",
-  "start_url": "./",
+  "start_url": "./elementec/",
   "scope": "./",
   "display": "standalone",
   "background_color": "#191a1c",
