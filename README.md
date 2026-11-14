@@ -8,11 +8,13 @@ Show category labels in rounded, bordered badges. Keep product and prompt cards 
 
 Keep products and prompts in two columns on phones, including narrow 320px screens. Follow the current live [Elementec Journal](https://elementec.co/journal), not the retired ChatGPT Site or its local checkout. The theme uses Satoshi, the blue-to-lime brand mark, rounded joined panels, lime action buttons, and system light/dark colours. Light mode uses `#f7f7f5` paper and white surfaces; dark mode uses `#191a1c` paper and `#232427` surfaces. Cards expand to three columns on wider desktop screens. Keep prompt reading and copy actions in the full-width dialog. The current font and brand mark are bundled so the Vault uses the same assets as the Journal. Recheck the live Journal before future theme changes.
 
-The root URL lists Elementec, Auto Unvrse, and Apple Unvrse. Existing root links with a type, reel ID, or entry fragment forward to Elementec with their query and fragment intact. The old `/edit.html` still opens the Elementec editor.
+The root URL lists Elementec, Auto Unvrse, Apple Unvrse, and Samsung Unvrse. Existing root links with a type, reel ID, or entry fragment forward to Elementec with their query and fragment intact. The old `/edit.html` still opens the Elementec editor.
 
 Auto Unvrse is at `/auto/` and has its own catalog in `site/auto/content.json`. Open `/auto/edit.html` to edit it and upload the exported file to `site/auto/`. Auto uses the linked-entry type for guides and links to the original public posts.
 
 Apple Unvrse is at `/apple/` and has its own catalog in `site/apple/content.json`. Open `/apple/edit.html` to edit it and upload the exported file to `site/apple/`. Its first guides link to Apple Support.
+
+Samsung Unvrse is at `/samsung/` and has its own catalog in `site/samsung/content.json`. Open `/samsung/edit.html` to edit it and upload the exported file to `site/samsung/`. Its first guides link to Samsung India.
 
 ## Add products and prompts
 

@@ -1,0 +1,32 @@
+{
+  "entries": [
+    {
+      "id": "galaxy-modes-and-routines",
+      "type": "product",
+      "title": "Set Up Galaxy Routines",
+      "category": "One UI",
+      "description": "Create routines that change Galaxy settings automatically when your chosen conditions are met.",
+      "url": "https://www.samsung.com/in/support/mobile-devices/how-to-use-routines-on-your-samsung-galaxy-device/",
+      "published": true
+    },
+    {
+      "id": "move-to-galaxy-with-smart-switch",
+      "type": "product",
+      "title": "Transfer to a New Galaxy With Smart Switch",
+      "category": "Galaxy Setup",
+      "description": "Move supported data from one Galaxy device to another using Smart Switch.",
+      "url": "https://www.samsung.com/in/support/apps-services/how-to-use-the-smart-switch-app-to-transfer-data-between-galaxy-devices/",
+      "published": true
+    },
+    {
+      "id": "find-a-lost-galaxy",
+      "type": "product",
+      "title": "Find a Lost Galaxy Device",
+      "category": "Device Care",
+      "description": "Learn how Samsung Find helps you locate Galaxy devices and compatible tags.",
+      "url": "https://www.samsung.com/in/apps/samsung-find/",
+      "published": true
+    }
+  ],
+  "collections": []
+}

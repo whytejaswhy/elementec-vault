@@ -1,0 +1,33 @@
+:root.samsung-vault {
+  --canvas: #f4f7fa;
+  --surface: #fff;
+  --ink: #101522;
+  --muted: #475566;
+  --line: #d5dce5;
+  --seam: #c4cedb;
+  --soft: #e4efff;
+  --focus: #005bb8;
+  --primary: #005bb8;
+  --primary-ink: #fff;
+  --accent: #005bb8;
+}
+@media (prefers-color-scheme: dark) {
+  :root.samsung-vault {
+    --canvas: #101522;
+    --surface: #1a2333;
+    --ink: #eff6ff;
+    --muted: #b6c5d5;
+    --line: #425163;
+    --seam: #556477;
+    --soft: #192f52;
+    --focus: #85bbff;
+    --accent: #85bbff;
+  }
+}
+.samsung-vault .brand-mark {
+  width: 44px;
+  height: 44px;
+  background: #000;
+  object-fit: contain;
+}
+.samsung-vault footer a { text-underline-offset: .2em; }
