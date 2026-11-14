@@ -4,6 +4,10 @@ const $ = id => document.getElementById(id);
 const tabs = [...document.querySelectorAll('[role="tab"]')];
 let entries = [], collections = [], activeCollection = new URLSearchParams(location.search).get('reel') || '', type = new URLSearchParams(location.search).get('type') === 'prompts' ? 'prompt' : 'product', activePrompt = null, loaded = false;
 const dialog = $('prompt-dialog');
+function entryLabel(count) {
+  const tab = tabs.find(tab => tab.dataset.type === type);
+  return count === 1 ? tab.dataset.singular || type : tab.dataset.plural || `${type}s`;
+}
 const offerQuickAccess = initQuickAccess();
 function el(tag, className, text) { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; }
 function state(title, text) { const box = el('div', 'state'); box.append(el('strong', '', title), el('span', '', text)); $('results').replaceChildren(box); }
@@ -21,8 +25,8 @@ function chooseType(next, update = true) {
 function render() {
   const scoped = activeCollection ? entries.filter(item => item.collectionId === activeCollection) : entries;
   const list = searchEntries(scoped, type, $('search').value, $('category').value, collections);
-  $('results-count').textContent = `${list.length} ${type === 'product' ? (list.length === 1 ? 'product' : 'products') : (list.length === 1 ? 'prompt' : 'prompts')}`;
-  if (!list.length) { const hasItems = entries.some(item => item.type === type); state(hasItems ? 'Nothing matches yet.' : `${type === 'product' ? 'Product links' : 'Prompts'} are coming soon.`, hasItems ? 'Try another search or choose All categories.' : 'Check back here for the next additions to the Vault.'); return; }
+  $('results-count').textContent = `${list.length} ${entryLabel(list.length)}`;
+  if (!list.length) { const hasItems = entries.some(item => item.type === type); state(hasItems ? 'Nothing matches yet.' : `${type === 'product' ? tabs[0].dataset.emptyLabel || 'Product links' : 'Prompts'} are coming soon.`, hasItems ? 'Try another search or choose All categories.' : 'Check back here for the next additions to the Vault.'); return; }
   if (!activeCollection) {
     const grid = el('div', 'grid');
     const browsing = type === 'product' && !$('search').value.trim() && !$('category').value;
@@ -45,9 +49,9 @@ function render() {
     const heading = el('div', 'collection-heading');
     const copy = el('div', 'collection-summary');
     const title = el('h2', '', collection.title); title.id = `collection-${collection.id}`;
-    section.setAttribute('aria-labelledby', title.id); copy.append(title, el('span', 'collection-count', `${members.length} ${type === 'product' ? (members.length === 1 ? 'product' : 'products') : (members.length === 1 ? 'prompt' : 'prompts')}`)); heading.append(copy);
+    section.setAttribute('aria-labelledby', title.id); copy.append(title, el('span', 'collection-count', `${members.length} ${entryLabel(members.length)}`)); heading.append(copy);
     const links = el('div', 'collection-links');
-    const link = el('a', '', activeCollection ? (type === 'product' ? 'All products' : 'All prompts') : 'View all ↗');
+    const link = el('a', '', activeCollection ? `All ${entryLabel(2)}` : 'View all ↗');
     const url = new URL(location.href); url.searchParams.set('type', type === 'prompt' ? 'prompts' : 'products'); url.hash = '';
     if (activeCollection) url.searchParams.delete('reel'); else url.searchParams.set('reel', collection.id);
     link.href = url.href; if (!activeCollection) link.setAttribute('aria-label', `Open collection: ${collection.title}`); links.append(link);
@@ -62,7 +66,7 @@ function render() {
 function folderFor(collection, members) {
   const folder = el('button', 'card folder-card'); folder.type = 'button';
   folder.dataset.reelColor = collectionTone(collection);
-  folder.setAttribute('aria-label', `Open ${collection.title}, ${members.length} products`);
+  folder.setAttribute('aria-label', `Open ${collection.title}, ${members.length} ${entryLabel(members.length)}`);
   folder.setAttribute('aria-haspopup', 'dialog');
   const previews = el('span', 'folder-previews'); previews.setAttribute('aria-hidden', 'true');
   const slots = members.length > 4 ? members.slice(0, 3) : members.slice(0, 4);
@@ -76,7 +80,7 @@ function folderFor(collection, members) {
   }
   if (members.length > 4) previews.append(el('span', 'folder-preview folder-more', `+${members.length - 3}`));
   const bottom = el('span', 'folder-bottom');
-  const copy = el('span', 'folder-copy'); copy.append(el('span', 'folder-title', collection.title), el('span', 'folder-count', `${members.length} products`));
+  const copy = el('span', 'folder-copy'); copy.append(el('span', 'folder-title', collection.title), el('span', 'folder-count', `${members.length} ${entryLabel(members.length)}`));
   const expand = el('span', 'folder-expand'); expand.setAttribute('aria-hidden', 'true');
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('viewBox','0 0 24 24');
   const path = document.createElementNS('http://www.w3.org/2000/svg', 'path'); path.setAttribute('d','M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5'); svg.append(path); expand.append(svg);

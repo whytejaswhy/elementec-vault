@@ -1,4 +1,8 @@
 import { readFile } from 'node:fs/promises';
 import { validateContent } from '../site/lib.mjs';
-const data = validateContent(JSON.parse(await readFile(new URL('../site/elementec/content.json', import.meta.url), 'utf8')));
-console.log(`Content valid: ${data.entries.length} entries.`);
+
+for (const vault of ['elementec', 'auto']) {
+  const file = new URL(`../site/${vault}/content.json`, import.meta.url);
+  const data = validateContent(JSON.parse(await readFile(file, 'utf8')));
+  console.log(`${vault}: ${data.entries.length} valid entries.`);
+}

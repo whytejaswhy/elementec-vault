@@ -1,0 +1,35 @@
+:root.auto-vault {
+  --canvas: #f0edf7;
+  --surface: #fff;
+  --ink: #111014;
+  --muted: #514a5e;
+  --line: #d7cee6;
+  --seam: #c1b4d4;
+  --soft: #ede5ff;
+  --focus: #753bee;
+  --primary: #753bee;
+  --primary-ink: #fff;
+  --accent: #6530d8;
+}
+@media (prefers-color-scheme: dark) {
+  :root.auto-vault {
+    --canvas: #111014;
+    --surface: #201b29;
+    --ink: #f0edf7;
+    --muted: #c2b8d2;
+    --line: #50465e;
+    --seam: #635671;
+    --soft: #302443;
+    --focus: #bfa5ff;
+    --accent: #bfa5ff;
+  }
+}
+.auto-vault .brand-mark {
+  display: grid;
+  place-items: center;
+  background: var(--primary);
+  color: var(--primary-ink);
+  font-size: .7rem;
+  font-weight: 800;
+}
+.auto-vault footer a { text-underline-offset: .2em; }

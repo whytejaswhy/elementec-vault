@@ -1,0 +1,23 @@
+{
+  "entries": [
+    {
+      "id": "cng-car-buying-checklist",
+      "type": "product",
+      "title": "CNG Car Buying Checklist",
+      "category": "Car Buying",
+      "description": "Estimate your fuel spend, find your usual refill stops, and check luggage space before choosing a CNG car.",
+      "url": "https://www.instagram.com/autounvrse/p/Dd8czDTjpWw/",
+      "published": true
+    },
+    {
+      "id": "thar-rwd-vs-4wd",
+      "type": "product",
+      "title": "Thar RWD vs 4WD",
+      "category": "Drivetrains",
+      "description": "An illustrated guide to how rear-wheel drive and four-wheel drive differ on the Mahindra Thar.",
+      "url": "https://www.instagram.com/autounvrse/p/Dd3-weJDmZz/",
+      "published": true
+    }
+  ],
+  "collections": []
+}

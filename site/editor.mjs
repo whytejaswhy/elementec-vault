@@ -6,7 +6,7 @@ function setDirty(value) { dirty = value; $('download').disabled = !ready; }
 function refreshList() {
   const nodes = data.entries.map(item => {
     const button = document.createElement('button'); button.type = 'button'; button.textContent = item.title; button.setAttribute('aria-pressed', String(item.id === currentId));
-    const meta = document.createElement('span'); meta.textContent = `${item.type === 'product' ? 'Product' : 'Prompt'} · ${item.category}${item.collectionId ? ' · ' + data.collections.find(c => c.id === item.collectionId)?.title : ''}${item.published ? '' : ' · Hidden'}`; button.append(meta);
+    const meta = document.createElement('span'); meta.textContent = `${Array.from($('entry-type').options).find(option => option.value === item.type).textContent} · ${item.category}${item.collectionId ? ' · ' + data.collections.find(c => c.id === item.collectionId)?.title : ''}${item.published ? '' : ' · Hidden'}`; button.append(meta);
     button.addEventListener('click', () => { if (formDirty && !confirm('Discard the changes in this form?')) return; fill(item); }); return button;
   });
   if (!nodes.length) { const empty = document.createElement('p'); empty.className = 'empty'; empty.textContent = 'Your Vault is ready for its first entry.'; nodes.push(empty); }
@@ -58,7 +58,7 @@ $('entry-form').addEventListener('submit', event => {
 $('remove-entry').addEventListener('click', () => { if (!currentId || !confirm('Remove this entry from your working file? The live Vault changes only after you upload the file.')) return; data.entries = data.entries.filter(e => e.id !== currentId); setDirty(true); fill(); status('Entry removed from your working file. Download and upload to publish the change.'); });
 $('download').addEventListener('click', () => {
   if (formDirty) return status('Save the entry in the form before downloading your changes.');
-  try { validateContent(data); const url = URL.createObjectURL(new Blob([JSON.stringify({ entries: data.entries, collections: data.collections }, null, 2) + '\n'], { type: 'application/json' })); const link = document.createElement('a'); link.href = url; link.download = 'content.json'; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); setDirty(false); status('Download started. Upload content.json to the site/elementec folder in GitHub and commit your changes.'); } catch (error) { status(error.message); }
+  try { validateContent(data); const url = URL.createObjectURL(new Blob([JSON.stringify({ entries: data.entries, collections: data.collections }, null, 2) + '\n'], { type: 'application/json' })); const link = document.createElement('a'); link.href = url; link.download = 'content.json'; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000); setDirty(false); status('Download started. Use Upload to GitHub, then commit content.json to publish your changes.'); } catch (error) { status(error.message); }
 });
 $('import-file').addEventListener('change', async event => {
   const file = event.target.files[0]; if (!file) return;
