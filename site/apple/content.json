@@ -1,0 +1,32 @@
+{
+  "entries": [
+    {
+      "id": "mac-desktop-menu-bar-and-dock",
+      "type": "product",
+      "title": "Get to Know Your Mac Desktop and Dock",
+      "category": "Mac Setup",
+      "description": "Learn how to customise the Dock and find controls such as battery status in the menu bar.",
+      "url": "https://support.apple.com/guide/mac-help/desktop-menu-bar-and-dock-mchlws12345m2/mac",
+      "published": true
+    },
+    {
+      "id": "show-finder-path-bar",
+      "type": "product",
+      "title": "Show the Path Bar in Finder",
+      "category": "Finder",
+      "description": "See where a file or folder is saved by turning on the path bar in Finder.",
+      "url": "https://support.apple.com/guide/mac-help/mchlp1774/mac",
+      "published": true
+    },
+    {
+      "id": "mac-keyboard-shortcuts",
+      "type": "product",
+      "title": "Mac Keyboard Shortcuts",
+      "category": "Shortcuts",
+      "description": "Find shortcuts for everyday actions, including showing the Dock and toggling the Finder path bar.",
+      "url": "https://support.apple.com/en-us/102650",
+      "published": true
+    }
+  ],
+  "collections": []
+}

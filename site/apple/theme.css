@@ -1,0 +1,33 @@
+:root.apple-vault {
+  --canvas: #f4f7fa;
+  --surface: #fff;
+  --ink: #101419;
+  --muted: #475566;
+  --line: #d5dce5;
+  --seam: #c4cedb;
+  --soft: #e6f2fa;
+  --focus: #006ba3;
+  --primary: #006ba3;
+  --primary-ink: #fff;
+  --accent: #006ba3;
+}
+@media (prefers-color-scheme: dark) {
+  :root.apple-vault {
+    --canvas: #101419;
+    --surface: #1b222b;
+    --ink: #eff6ff;
+    --muted: #b6c5d5;
+    --line: #425163;
+    --seam: #556477;
+    --soft: #1b344a;
+    --focus: #7bcfff;
+    --accent: #7bcfff;
+  }
+}
+.apple-vault .brand-mark {
+  width: 44px;
+  height: 44px;
+  background: #000;
+  object-fit: contain;
+}
+.apple-vault footer a { text-underline-offset: .2em; }
